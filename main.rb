@@ -22,7 +22,9 @@ lines = lines.map do |line|
     line.gsub! pattern, ""
   end
   
-  line.gsub!('nil', "\"\"").split(", \"")
+  # Делаем проверку если строка содержит 'nil', иначе не возможно вызывать метод у NilClass
+  line.gsub!('nil', "\"\"") if line.include?('nil')
+  line.split(", \"")
 end
 
 p lines[0]
