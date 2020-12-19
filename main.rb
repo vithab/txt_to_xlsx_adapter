@@ -1,11 +1,13 @@
 require 'write_xlsx'
+require 'byebug'
 # Задача: 
   # Получить хэш для записи в xlsx с помощью гема 'write_xlsx'
   # Из текстового файла считываются строки вида:
-  # "{:company_title=>"Элитные интерьеры", :branch=>nil, :site=>nil, :address=>nil, :phone=>"", :email=>"", 
-  #   :inn=>nil, :description=>"", :affiliated_companies=>"", :persons=>"", :owned_buildings=>"", 
-  #   :lease_transactions=>"ТЦ Торговый центр", 
-  #   :sale_transactions=>"", :logo=>"", :url=>""}"
+  # "{:company_title=>\"Прикосновение\", :branch=>nil, :site=>nil, :address=>nil, 
+  #   :phone=>\"\", :email=>\"\", :inn=>nil, :description=>\"\", :affiliated_companies=>\"\", 
+  #   :persons=>\"\", :owned_buildings=>\"\", 
+  #   :lease_transactions=>\"МЦ Бизнес-центр улица Миклухо-Маклая, 36А\", 
+  #   :sale_transactions=>\"\", :logo=>\"\", :url=>\"https://any-site.com/any-category/prikosnoveniye\"}"
 
 lines = File.open('./incoming_files/companies.txt', 'r') { |file| file.readlines }
 lines.map! { |link| link.strip }
@@ -47,6 +49,7 @@ lines.each_with_index do |line, index|
   attributes << Hash[keys.zip(line)]
 end
 
+# Метод для сохранения в файл xlsx (аргументы: имя файла, аттрибуты объекта(поля), книга и лист Эксель)
 def print_to_xlsx(file_name, attributes, workbook, worksheet)
   format_header = workbook.add_format
   format_header.set_bold
@@ -98,6 +101,7 @@ end
 
 puts "\nWait... I`m working."
 
+# Создаём книгу, лист и передаем в метод
 workbook = WriteXLSX.new("./results/#{file_name}.xlsx")
 worksheet = workbook.add_worksheet
 print_to_xlsx(file_name, attributes, workbook, worksheet)
