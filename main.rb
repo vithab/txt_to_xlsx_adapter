@@ -27,7 +27,7 @@ count = lines.size
 
 # Очищаем от лишних символов полученные строки из тхт файла.
 # Чтобы получить значения для будущего хэша, вырезаем из строки ключи по key_patterns
-lines = lines.map do |line|
+def clear_line(line, key_patterns)
   line.gsub!('{', '').gsub!('}', '').gsub!(':', '').gsub!('https', 'https:')  
   key_patterns.each do |pattern|
     line.gsub! pattern, ""
@@ -37,6 +37,11 @@ lines = lines.map do |line|
   line.gsub!('nil', "\"\"") if line.include?('nil')
   line.split(", \"")
 end
+
+lines = lines.map do |line|
+  clear_line(line, key_patterns)
+end
+
 
 # Убираем лишнее, делаем ключи символами, добавляем в массив keys
 key_patterns.map { |key| keys << key.gsub('=>', '').to_sym }
