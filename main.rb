@@ -35,7 +35,7 @@ def clear_line(line, key_patterns)
   
   # Делаем проверку если строка содержит 'nil', иначе не возможно вызывать метод у NilClass
   line.gsub!('nil', "\"\"") if line.include?('nil')
-  line.split(", \"")
+  line.split("\", \"")
 end
 
 lines = lines.map do |line|
