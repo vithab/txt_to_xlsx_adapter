@@ -55,7 +55,7 @@ key_patterns.map { |key| keys << key.gsub('=>', '').to_sym }
 # Объединяем 2 массива в хэш
 lines.each_with_index do |line, index|
   line.map { |l| l.gsub!("\"", "") }
-  puts "Writing string:   #{index + 1} from #{count}"
+  puts "Reading string:   #{index + 1} from #{count}"
   attributes << Hash[keys.zip(line)]
 end
 
@@ -109,7 +109,7 @@ def print_to_xlsx(file_name, attributes, workbook, worksheet)
   workbook.close
 end
 
-puts "\nWait... I`m working."
+puts "\nWait...writing. I`m working."
 
 # Создаём книгу, лист и передаем в метод
 workbook = WriteXLSX.new("./results/#{file_name}.xlsx")
