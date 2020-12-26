@@ -12,6 +12,11 @@ require 'byebug'
 lines = File.open('./incoming_files/companies.txt', 'r') { |file| file.readlines }
 lines.map! { |link| link.strip }
 
+# Важно: если есть общая составная часть в ключах(key_patterns), чтоб в очереди массива
+# она была последней(идущей за наименьшим вхождением), например:
+# "company_title=>" и "title=>" - должен идти после "company_title=>",
+# иначе при итерации вырежется "title=>" из "company_title=>" (останется "company_") 
+# и хэш неправильно соберётся
 key_patterns = [
                 "company_title=>", "branch=>", "site=>", "address=>", 
                 "phone=>", "email=>", "inn=>", "description=>", 
