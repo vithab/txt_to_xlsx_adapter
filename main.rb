@@ -102,7 +102,9 @@ def print_to_xlsx(file_name, attributes, workbook, worksheet)
     worksheet.write_string("M#{i}", "#{r[:sale_transactions]}")
     worksheet.write_url(   "N#{i}", "#{r[:logo]}", format_url)
     worksheet.write_url(   "O#{i}", "#{r[:url]}", format_url)
-
+    # Применять метод .write_string, т.к. в геме (и Эксель) у метода .write 
+    # ограничение на УРЛ менее 255 символов
+    
     i += 1
   end
 
@@ -114,6 +116,9 @@ puts "\nWait...writing. I`m working."
 # Создаём книгу, лист и передаем в метод
 workbook = WriteXLSX.new("./results/#{file_name}.xlsx")
 worksheet = workbook.add_worksheet
+
+# Учесть тот факт, что gem 'write_xlsx-0.85.7' даёт на 1 лист записать не более 65530 ссылок.
+# number of URLS is over Excel's limit of 65,530 URLS per worksheet. (RuntimeError)
 print_to_xlsx(file_name, attributes, workbook, worksheet)
 
 puts "\n\nDONE! Check file: /results/#{file_name}.xlsx\n\n"
