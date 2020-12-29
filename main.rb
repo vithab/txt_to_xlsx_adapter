@@ -67,6 +67,7 @@ worksheet = workbook.add_worksheet
 
 # Учесть тот факт, что gem 'write_xlsx-0.85.7' даёт на 1 лист записать не более 65530 ссылок.
 # number of URLS is over Excel's limit of 65,530 URLS per worksheet. (RuntimeError)
+# Также ссылки не длинее 255 символов.
 PrintResults.print_to_xlsx(file_name, attributes, workbook, worksheet)
 
 puts "\n\nDONE! Check file: /results/#{file_name}.xlsx\n\n"
