@@ -27,7 +27,7 @@ key_patterns = [
 keys = []
 values = []
 attributes = []
-time = Time.now.to_s.split(' ').first(2).join('_').gsub(':', '-')
+time = Time.now.strftime("%d-%m-%Y_%H-%M-%S")
 file_name = "company_#{time}"
 count = lines.size
 
